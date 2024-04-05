@@ -9,11 +9,11 @@ http.createServer((req,res) => {
             break;
         case '/about':
             res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('About page');
+            res.end('This is Mike\'s about page');
             break;
         default:
             res.writeHead(404, {'Content-Type': 'text/plain'});
-            res.end('Not found');
+            res.end('404: Page not found');
             break;
     }    
 }).listen(process.env.PORT || 3000);
