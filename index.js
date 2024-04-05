@@ -1,4 +1,4 @@
-import http from 'http';
+import http from 'node:http';
 
 http.createServer((req,res) => {
     let path = req.url.toLowerCase();    
