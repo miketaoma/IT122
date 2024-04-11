@@ -11,6 +11,8 @@
   "author": "mike ma",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^18.0.6"
+    "@types/node": "^18.0.6",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2"
   }
 }
