@@ -1,0 +1,20 @@
+body {
+  background-color: whitesmoke;
+}
+
+hr {
+  border: 2px solid black;
+}
+
+li {
+  list-style-type: square;
+}
+
+a:visited {
+  color: palevioletred
+}
+
+a:hover {
+  color: forestgreen;
+}
+

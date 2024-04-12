@@ -6,7 +6,7 @@ import express from 'express';
 const app = express();
 
 app.set("port", process.env.PORT || 3000);
-app.use(express.static('./public')); // allows direct navigation to static files
+app.use('/public', express.static('public')); // allows direct navigation to static files
 app.use(express.urlencoded({
   extended: true
 })); //Parse URL-encoded bodies

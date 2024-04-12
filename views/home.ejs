@@ -1,8 +1,18 @@
-<h2>Home</h2>
-<hr>
-<h3>Movies</h3>
+<html>
+  <head>
+    <link href= "/public/styles.css" rel="stylesheet" type="text/css" />
+  </head>
+    <body>
+
+      <h2>Home</h2>
+      <hr>
+      <h3>Movies</h3>
 
   
-<% movies.forEach(function(movie) { %>
-  <li><a href="/movies/<%= movie.id %>"> <%= movie.title %></li>
-<% }); %>
+      <% movies.forEach(function(movie) { %>
+        <li><a href="/movies/<%= movie.id %>"> <%= movie.title %></li>
+      <% }); %>
+
+    </body>
+
+</html>
