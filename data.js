@@ -10,8 +10,8 @@ const getAll = () => {
   return movies;
 }
 
-const getItem = () => {
-  let movie = movies.find(movie => movie.id == req.params.id);
+const getItem = (id) => {
+  let movie = movies.find(movie => movie.id == id);
   return movie;
 }
 
