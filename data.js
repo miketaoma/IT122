@@ -6,11 +6,11 @@ const movies = [
   { title: "Spirited Away" , year: 2001, director: "Hayao Miyazaki", genre: "Animation", id: 5 }
 ]
 
-const getAll = (movies) => {
+const getAll = () => {
   return movies;
 }
 
-const getItem = (movies) => {
+const getItem = () => {
   let movie = movies.find(movie => movie.id == req.params.id);
   return movie;
 }
