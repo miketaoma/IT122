@@ -16,8 +16,19 @@ app.use(express.json()); //Used to parse JSON bodies
 app.set('view engine', 'ejs');
 
 app.get('/', (req,res) => {
-  console.log(req.query)
-  res.render('home', { movies: data.getAll() });
+  res.render('home', { 
+    movies: data.getAll() 
+    }        
+  );
+});
+
+app.get('/movies/:id', (req,res) => {
+  let result = data.getItem(req.params.id);
+  res.render("details", {
+      title: req.query.title,
+      result
+    }        
+  );
 });
 
 app.listen(app.get('port'), () => {
