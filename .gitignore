@@ -1,3 +1,6 @@
+# src directory
+src/
+
 # Replit config files
 .replit
 replit.nix
