@@ -24,7 +24,7 @@ app.get('/', (req,res) => {
 });
 
 app.get('/details/:title', (req,res,next) => {
-    Movie.findOne({ title:req.query.title }).lean()
+    Movie.findOne({ title:req.params.title }).lean()
         .then((movie) => {           
           res.render('details', {result: movie} );
         })
