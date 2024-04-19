@@ -18,16 +18,15 @@ app.set('view engine', 'ejs');
 app.get('/', (req,res) => {
     Movie.find({}).lean()
         .then((movies) => {
-            res.render('home', { movies });
+          res.render('home', { movies });
         })
         .catch(err => next(err));
 });
 
-app.get('/movies/:title', (req,res,next) => {
-    // db query can use request parameters
+app.get('/details/:title', (req,res,next) => {
     Movie.findOne({ title:req.query.title }).lean()
-        .then((movie) => {
-            res.render('details', {result: movie} );
+        .then((movie) => {           
+          res.render('details', {result: movie} );
         })
         .catch(err => next(err));
 });
