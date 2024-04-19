@@ -1,7 +1,7 @@
 "use strict"
 
-import * as data from './data.js';
 import express from 'express';
+import { Movie } from "./models/Movie.js";
 
 const app = express();
 
@@ -16,19 +16,26 @@ app.use(express.json()); //Used to parse JSON bodies
 app.set('view engine', 'ejs');
 
 app.get('/', (req,res) => {
-  res.render('home', { 
-    movies: data.getAll() 
-    }        
-  );
+    Movie.find({}).lean()
+        .then((movies) => {
+            res.render('home', { movies });
+        })
+        .catch(err => next(err));
 });
 
-app.get('/movies/:id', (req,res) => {
-  let result = data.getItem(req.params.id);
-  res.render("details", {
-      title: req.query.title,
-      result
-    }        
-  );
+app.get('/movies/:title', (req,res,next) => {
+    // db query can use request parameters
+    Movie.findOne({ title:req.query.title }).lean()
+        .then((movie) => {
+            res.render('details', {result: movie} );
+        })
+        .catch(err => next(err));
+});
+
+app.use((req,res) => {
+    res.type('text/plain'); 
+    res.status(404);
+    res.send('404 - Not found');
 });
 
 app.listen(app.get('port'), () => {
