@@ -34,27 +34,35 @@ app.get('/details/:title', (req,res,next) => {
         .catch(err => next(err));
 });
 
-//API req for home
+//API for all items
 app.get('/api/movies', (req,res) => {
     Movie.find({}).lean()
         .then((movies) => {
           res.json(movies);
         })
-        .catch(err => {
-          res.status(500).send('Database Error occured');  
-        })
 });
 
-//API req for details
+//API for one item by title (case senstive)
 app.get('/api/movies/:title', (req,res) => {
     Movie.findOne({ title:req.params.title }).lean()
         .then((movie) => {           
           res.json(movie);
         })
-        .catch(err => {
-          res.status(500).send('Database Error occured');  
+});
+
+//API for deleting item
+
+app.get( '/api/delete/:title', (req,res) => {   
+    Movie.deleteOne({ title:req.params.title }).lean()
+        .then((movie) => {           
+          res.json(movie);
         })
 });
+
+//API for adding item
+//app.post ( '/api/add/:title', (req,res) => {
+  
+//});
 
 app.use((req,res) => {
     res.type('text/plain'); 
