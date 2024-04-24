@@ -12,6 +12,9 @@ app.use(express.urlencoded({
 })); //Parse URL-encoded bodies
 app.use(express.json()); //Used to parse JSON bodies
 
+import cors from 'cors';
+app.use('/api', cors()); // set Access-Control-Allow-Origin header for api route
+
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
@@ -29,6 +32,28 @@ app.get('/details/:title', (req,res,next) => {
           res.render('details', {result: movie} );
         })
         .catch(err => next(err));
+});
+
+//API req for home
+app.get('/api/movies', (req,res) => {
+    Movie.find({}).lean()
+        .then((movies) => {
+          res.json(movies);
+        })
+        .catch(err => {
+          res.status(500).send('Database Error occured');  
+        })
+});
+
+//API req for details
+app.get('/api/movies/:title', (req,res) => {
+    Movie.findOne({ title:req.params.title }).lean()
+        .then((movie) => {           
+          res.json(movie);
+        })
+        .catch(err => {
+          res.status(500).send('Database Error occured');  
+        })
 });
 
 app.use((req,res) => {
