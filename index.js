@@ -79,21 +79,16 @@ app.get( '/api/delete/:title', (req,res) => {
 });
 
 //API for adding item
-app.post ( '/api/add/:title/:director/:year/:genre', (req,res) => {
-  let title = req.params.title;
-  let director = req.params.director;
-  let year = req.params.year;
-  let genre = req.params.genre;
-  const newMovie = { 'title': title, 'director': director, 'year': year, 'genre': genre };
+app.post ( '/api/add/', (req,res) => {
   
-  Movie.findOne({ title })
+  Movie.updateOne({ title:req.body.title }, req.body, { upsert: true })
     .then((movie) => {
-      if (!movie) {
-        Movie.create({ title, director, year, genre })
-        res.json(req.params.title + ' added');
+      if (movie.modifiedCount > 0) {
+        res.json(req.body.title + ' updated');
+      } else if (movie.upsertedCount > 0) {
+        res.json(req.body.title + ' added');
       } else {
-        Movie.updateOne({'title':title}, newMovie)
-        res.json(req.params.title + ' updated');
+        res.json(req.body.title + ' not found. Addition failed.');
       }
     })
     .catch(err => {
