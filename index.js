@@ -84,14 +84,16 @@ app.post ( '/api/add/:title/:director/:year/:genre', (req,res) => {
   let director = req.params.director;
   let year = req.params.year;
   let genre = req.params.genre;
+  const newMovie = { 'title': title, 'director': director, 'year': year, 'genre': genre };
   
-  Movie.findOne({ title, director, year, genre })
+  Movie.findOne({ title })
     .then((movie) => {
-      if (movie) {
-        res.json(req.params.title + ' already exists'); 
-      } else {
+      if (!movie) {
         Movie.create({ title, director, year, genre })
         res.json(req.params.title + ' added');
+      } else {
+        Movie.updateOne({'title':title}, newMovie)
+        res.json(req.params.title + ' updated');
       }
     })
     .catch(err => {
