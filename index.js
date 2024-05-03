@@ -21,7 +21,8 @@ app.set('view engine', 'ejs');
 app.get('/', (req,res,next) => {
   Movie.find({}).lean()
     .then((movies) => {
-      res.render('home', { movies });
+      //res.render('home', { movies });
+      res.render('home', {items: JSON.stringify(movies)});
     })
     .catch(err => next(err));
 });
