@@ -4,8 +4,6 @@
 
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-
-    <!-- Don't use this in production: -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 
@@ -21,13 +19,26 @@
     const items = <%- items %>;
     console.log(items)
 
-    // define other components
-
-    const App = () => {
-      return <div><h2>Show components here</h2></div>;
+    function ItemsList(props) {
+      const items = props.items
+      const listItems = items.map((item) =>
+        <li key={item._id} onClick={props.clickHandler}>
+          {item.title}
+        </li>
+      );
+      return (
+        <ul>{listItems}</ul>
+      );
     }
 
-    ReactDOM.render(<App />, document.getElementById('root'));
+    const showDetail = (event) => {
+        console.log(event.target)
+        console.log(event.target.innerText)
+        console.log(event.target.id)
+        window.location.href = "/details/" + event.target.innerText;
+    }
+
+    ReactDOM.render(<ItemsList items={items} clickHandler={showDetail} />, document.getElementById('root'));
 </script>
 </body>
 </html>
