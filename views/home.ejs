@@ -16,6 +16,27 @@
 <div id="root"></div>
 <script type="text/babel">
 
+  const App = () => {
+
+    // State?
+    // Movie state?
+    // selected item?
+
+    // fetch your movies -> useEffect()
+
+    // handle functions (CRUD) Create, update delete
+    return (
+        <h1>This will render at the top of main content</h1>
+        {
+          // Render main content here
+          // ItemsList ... parameters, setSelectedMovie, moviestate
+          // DetailForm ...parameters, selectedMovie, onDelete, onUpdate, onSave, onClose
+        }
+      </>
+    )
+  }
+
+    // This will be replaced with the useEffect + movie state
     const items = <%- items %>;
     console.log(items)
 
@@ -31,13 +52,28 @@
       );
     }
 
+    const DetailSideBar = () => {
+      // props from App
+      
+      return (
+        <p>movie detail form component<p/>
+      )
+    }
+    
     const showDetail = (event) => {
+      // should have logic to set/show the selected movie
         console.log(event.target)
         console.log(event.target.innerText)
         console.log(event.target.id)
         window.location.href = "/details/" + event.target.innerText;
     }
 
+    // DetailForm component
+    // form to handle field changes
+    // https://www.freecodecamp.org/news/how-to-build-forms-in-react/
+    // Refer to rubric for form requirements
+
+    // When ready replace ItemsList with App
     ReactDOM.render(<ItemsList items={items} clickHandler={showDetail} />, document.getElementById('root'));
 </script>
 </body>
