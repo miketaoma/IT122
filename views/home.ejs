@@ -15,9 +15,10 @@
 
 <div id="root"></div>
 <script type="text/babel">
+  
+  const items = <%- items %>;
 
   const App = () => {
-
     // State?
     // Movie state?
     // selected item?
@@ -25,25 +26,57 @@
     // fetch your movies -> useEffect()
 
     // handle functions (CRUD) Create, update delete
-    return (
-        <h1>This will render at the top of main content</h1>
-        {
-          // Render main content here
-          // ItemsList ... parameters, setSelectedMovie, moviestate
-          // DetailForm ...parameters, selectedMovie, onDelete, onUpdate, onSave, onClose
+    const [movies, setMovies] = React.useState(items);
+    const [selectedItem, setSelectedItem] = React.useState(null);
+
+    const handleMovieUpdate = (event) => {
+      event.preventDefault();
+      console.log(event.target)
+      const form = event.target;
+      const title = form.title.value;
+      const director = form.director.value;
+      const year = form.year.value;
+      const genre = form.genre.value;
+      const opinion = form.opinion.value;
+      
+      const updatedMovies = movies.map((movie) => {
+        if (movie._id === id) {
+          movie.title = title;
+          movie.director = director;
+          movie.year = year;
+          movie.genre = genre;
+          movie.opinion = opinion;
         }
+        return movie;
+      });
+      
+      setMovies(updatedMovies);
+      setSelectedItem(null);
+    }
+
+    const handleItemClick = (event) => {
+      const movie = items.find((movie) => movie._id === event.target.id);
+    }
+
+    const clearEdit = () => {
+      setSelectedItem(null);
+    }
+    
+    return (
+      <>
+        <div>
+          <ItemsList items={movies} selectedItem={selectedItem} setSelected={handleItemClick}/>
+          <DetailForm/>
+        </div>
       </>
-    )
+    );
   }
 
-    // This will be replaced with the useEffect + movie state
-    const items = <%- items %>;
-    console.log(items)
 
     const ItemsList = (props) => {
-      const items = props.items
+      const {items, selectedItem} = props;
       const listItems = items.map((item) =>
-        <li key={item._id} onClick={props.clickHandler}>
+        <li key={item._id} onClick={props.setSelected}>
           {item.title}
         </li>
       );
@@ -52,21 +85,14 @@
       );
     }
 
-    const DetailSideBar = () => {
-      // props from App
-      
-      return (
-        <p>movie detail form component<p/>
-      )
-    }
+    const DetailForm = (props) => {
+          return (
+              <>
+                <h1>test</h1>
+              </>
+            );
+          }
     
-    const showDetail = (event) => {
-      // should have logic to set/show the selected movie
-        console.log(event.target)
-        console.log(event.target.innerText)
-        console.log(event.target.id)
-        window.location.href = "/details/" + event.target.innerText;
-    }
 
     // DetailForm component
     // form to handle field changes
@@ -74,7 +100,7 @@
     // Refer to rubric for form requirements
 
     // When ready replace ItemsList with App
-    ReactDOM.render(<ItemsList items={items} clickHandler={showDetail} />, document.getElementById('root'));
+    ReactDOM.render(<App />, document.getElementById('root'));
 </script>
 </body>
 </html>
