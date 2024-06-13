@@ -19,7 +19,7 @@
     const items = <%- items %>;
     console.log(items)
 
-    function ItemsList(props) {
+    const ItemsList = (props) => {
       const items = props.items
       const listItems = items.map((item) =>
         <li key={item._id} onClick={props.clickHandler}>
