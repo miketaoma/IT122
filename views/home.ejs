@@ -27,51 +27,27 @@
 
     // handle functions (CRUD) Create, update delete
     const [movies, setMovies] = React.useState(items);
-    const [selectedItem, setSelectedItem] = React.useState(null);
-
-    const handleMovieUpdate = (event) => {
-      event.preventDefault();
-      console.log(event.target)
-      const form = event.target;
-      const title = form.title.value;
-      const director = form.director.value;
-      const year = form.year.value;
-      const genre = form.genre.value;
-      const opinion = form.opinion.value;
-      
-      const updatedMovies = movies.map((movie) => {
-        if (movie._id === id) {
-          movie.title = title;
-          movie.director = director;
-          movie.year = year;
-          movie.genre = genre;
-          movie.opinion = opinion;
-        }
-        return movie;
-      });
-      
-      setMovies(updatedMovies);
-      setSelectedItem(null);
-    }
-
-    const handleItemClick = (event) => {
-      const movie = items.find((movie) => movie._id === event.target.id);
-    }
+    const [selectedItem, setSelectedItem] = React.useState(items);
 
     const clearEdit = () => {
-      setSelectedItem(null);
+      document.getElementById("myForm").reset();
+    }
+
+    const itemClick = (event) => {
+      const movie = items.find((movie) => movie.title == event.target.innerText);
+      setSelectedItem(movie);
+      console.log(movie)
     }
     
     return (
       <>
         <div>
-          <ItemsList items={movies} selectedItem={selectedItem} setSelected={handleItemClick}/>
-          <DetailForm/>
+          <ItemsList items = {movies} selectedItem = {selectedItem} setSelected = {itemClick} />
+          <DetailForm clear = {clearEdit} selectedItem = {selectedItem} />
         </div>
       </>
     );
   }
-
 
     const ItemsList = (props) => {
       const {items, selectedItem} = props;
@@ -85,10 +61,19 @@
       );
     }
 
-    const DetailForm = (props) => {
+    const DetailForm = (props) => { 
+      const {clear} = props;
           return (
               <>
-                <h1>test</h1>
+                <h3>Details:</h3>
+                <form id = "myForm">
+                  <input type="text" name="title" placeholder="title" /><p/>
+                  <input type="text" name="director" placeholder="director" /><p/>
+                  <input type="text" name="year" placeholder="year" /><p/>
+                  <input type="text" name="genre" placeholder="genre" /><p/>
+                  <input type="text" name="opinion" placeholder="opinion" /><p/>
+                </form>
+                <button type="button" onClick={clear}>Clear</button>
               </>
             );
           }
