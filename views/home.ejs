@@ -35,12 +35,17 @@
       setSelectedItem(movie);
       console.log(movie)
     }
+
+    const handleMovieUpdate = (event) => {
+      setSelectedItem([]);
+    }
     
     return (
       <>
         <div>
-          <ItemsList items = {movies} selectedItem = {selectedItem} setSelected = {itemClick} />
-          <DetailForm clear = {clearEdit} selectedItem = {selectedItem} />
+          <ItemsList items={movies} setSelected={itemClick}/>
+          <DetailForm clear={clearEdit} selectedItem={selectedItem} changeHandler={handleMovieUpdate}/>
+          <input type="text" name="title" placeholder="title" value="ABC" width="50%" onChange={handleMovieUpdate} /><p/>
         </div>
       </>
     );
@@ -59,26 +64,24 @@
     }
 
     const DetailForm = (props) => { 
-      const {clear, selectedItem} = props;
+      const {clear, selectedItem, changeHandler} = props;
+      console.log(changeHandler);
           return (
               <>
                 <h3>Details:</h3>
                 {
                   <form id = "myForm">
-                    <input type="text" name="title" placeholder="title" value={props.selectedItem.title || ''} onChange={props.changeHandler} /><p/>
-                    <input type="text" name="director" placeholder="director" value={props.selectedItem.director || ''} onChange={props.changeHandler} /><p/>
-                    <input type="text" name="year" placeholder="year" value={props.selectedItem.year || ''} onChange={props.changeHandler} /><p/>
-                    <input type="text" name="genre" placeholder="genre" value={props.selectedItem.genre || ''} onChange={props.changeHandler} /><p/>
-                    <input type="text" name="opinion" placeholder="opinion" value={props.selectedItem.opinion || ''} onChange={props.changeHandler} /><p/>
+                    <input type="text" name="title" placeholder="title" value={selectedItem.title || ''} width="50%" onChange={changeHandler} /><p/>
+                    <input type="text" name="director" placeholder="director" value={selectedItem.director || ''} onChange={changeHandler} /><p/>
+                    <input type="text" name="year" placeholder="year" value={selectedItem.year || ''} onChange={changeHandler} /><p/>
+                    <input type="text" name="genre" placeholder="genre" value={selectedItem.genre || ''} onChange={changeHandler} /><p/>
+                    <input type="text" name="opinion" placeholder="opinion" value={selectedItem.opinion || ''} onChange={changeHandler} /><p/>
                   </form>
                 }
                 <button type="button" onClick={clear}>Clear</button>
               </>
             );
           }
-    
-    // form to handle field changes
-    // https://www.freecodecamp.org/news/how-to-build-forms-in-react/
     
     ReactDOM.render(<App />, document.getElementById('root'));
 </script>
