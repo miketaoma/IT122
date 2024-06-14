@@ -24,20 +24,33 @@
 
     // handle functions (CRUD) Create, update delete
     const [movies, setMovies] = React.useState(items);
-    const [selectedItem, setSelectedItem] = React.useState(items);
+    const [selectedItem, setSelectedItem] = React.useState([]);
 
     const clearEdit = () => {
       setSelectedItem([]);
     }
 
     const itemClick = (event) => {
-      const movie = items.find((movie) => movie.title == event.target.innerText);
+      const movie = movies.find((movie) => movie.title == event.target.innerText);
       setSelectedItem(movie);
       console.log(movie)
     }
 
     const handleMovieUpdate = (event) => {
-      setSelectedItem([]);
+      let name = event.target.name;
+      let value = event.target.value;
+      let changedMovie = {...selectedItem};
+      changedMovie[name] = value;
+
+      let changedMovies = movies.map(movie => {
+        if (movie._id == selectedItem._id) {
+          return changedMovie;
+        } else {
+          return movie;
+        }
+      })
+      setMovies(changedMovies);
+      setSelectedItem(changedMovie);
     }
     
     return (
@@ -45,14 +58,13 @@
         <div>
           <ItemsList items={movies} setSelected={itemClick}/>
           <DetailForm clear={clearEdit} selectedItem={selectedItem} changeHandler={handleMovieUpdate}/>
-          <input type="text" name="title" placeholder="title" value="ABC" width="50%" onChange={handleMovieUpdate} /><p/>
         </div>
       </>
     );
   }
 
     const ItemsList = (props) => {
-      const {items, selectedItem} = props;
+      const {items} = props;
       const listItems = items.map((item) =>
         <li key={item._id} onClick={props.setSelected}>
           {item.title}
@@ -65,13 +77,12 @@
 
     const DetailForm = (props) => { 
       const {clear, selectedItem, changeHandler} = props;
-      console.log(changeHandler);
           return (
               <>
                 <h3>Details:</h3>
                 {
                   <form id = "myForm">
-                    <input type="text" name="title" placeholder="title" value={selectedItem.title || ''} width="50%" onChange={changeHandler} /><p/>
+                    <input type="text" name="title" placeholder="title" value={selectedItem.title || ''} onChange={changeHandler} /><p/>
                     <input type="text" name="director" placeholder="director" value={selectedItem.director || ''} onChange={changeHandler} /><p/>
                     <input type="text" name="year" placeholder="year" value={selectedItem.year || ''} onChange={changeHandler} /><p/>
                     <input type="text" name="genre" placeholder="genre" value={selectedItem.genre || ''} onChange={changeHandler} /><p/>

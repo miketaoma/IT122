@@ -98,6 +98,22 @@ app.post ( '/api/add/', (req,res) => {
     });
 });
 
+app.put ( '/api/save/', (req,res) => {
+
+  Movie.updateOne({ title:req.body.title }, req.body)
+    .then((movie) => {
+      if (movie.modifiedCount > 0) {
+        res.json(req.body.title + ' updated');
+      } else {
+        res.json(req.body.title + ' not found. Save failed.');
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send('Database Error occurred');
+    });
+});
+
 app.use((req,res) => {
     res.type('text/plain'); 
     res.status(404);
