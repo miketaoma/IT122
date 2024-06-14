@@ -30,7 +30,7 @@
     const [selectedItem, setSelectedItem] = React.useState(items);
 
     const clearEdit = () => {
-      document.getElementById("myForm").reset();
+      setSelectedItem([]);
     }
 
     const itemClick = (event) => {
@@ -62,17 +62,19 @@
     }
 
     const DetailForm = (props) => { 
-      const {clear} = props;
+      const {clear, selectedItem} = props;
           return (
               <>
                 <h3>Details:</h3>
-                <form id = "myForm">
-                  <input type="text" name="title" placeholder="title" /><p/>
-                  <input type="text" name="director" placeholder="director" /><p/>
-                  <input type="text" name="year" placeholder="year" /><p/>
-                  <input type="text" name="genre" placeholder="genre" /><p/>
-                  <input type="text" name="opinion" placeholder="opinion" /><p/>
-                </form>
+                {
+                  <form id = "myForm">
+                    <input type="text" name="title" placeholder="title" value={props.selectedItem.title || ''} onChange={props.changeHandler} /><p/>
+                    <input type="text" name="director" placeholder="director" value={props.selectedItem.director || ''} onChange={props.changeHandler} /><p/>
+                    <input type="text" name="year" placeholder="year" value={props.selectedItem.year || ''} onChange={props.changeHandler} /><p/>
+                    <input type="text" name="genre" placeholder="genre" value={props.selectedItem.genre || ''} onChange={props.changeHandler} /><p/>
+                    <input type="text" name="opinion" placeholder="opinion" value={props.selectedItem.opinion || ''} onChange={props.changeHandler} /><p/>
+                  </form>
+                }
                 <button type="button" onClick={clear}>Clear</button>
               </>
             );
