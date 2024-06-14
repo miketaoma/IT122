@@ -11,10 +11,12 @@
   "author": "mike ma",
   "license": "ISC",
   "dependencies": {
+    "@eslint/js": "^9.4.0",
     "@types/node": "^18.0.6",
     "cors": "^2.8.5",
     "ejs": "^3.1.9",
     "express": "^4.19.2",
+    "globals": "^15.4.0",
     "mongoose": "^8.3.2"
   },
   "devDependencies": {
