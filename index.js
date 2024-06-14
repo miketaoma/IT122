@@ -103,7 +103,7 @@ app.put ( '/api/save/', (req,res) => {
   Movie.updateOne({ title:req.body.title }, req.body)
     .then((movie) => {
       if (movie.modifiedCount > 0) {
-        res.json(req.body.title + ' updated');
+        res.json(req.body.title + ' saved');
       } else {
         res.json(req.body.title + ' not found. Save failed.');
       }
